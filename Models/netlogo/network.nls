@@ -131,9 +131,9 @@ to network:cache-nw-measures
       ; compute shortest path
       let c2 item j clist let path [] let tpath [] ask c1 [set path nw:weighted-path-to c2 "road-length" set tpath nw:turtles-on-weighted-path-to c2 "road-length"]
       ; update link betweeness
-      let l 0 foreach path [ask ? [set l l + road-length set bw-centrality bw-centrality + 1]]
+      let l 0 foreach path [? -> ask ? [set l l + road-length set bw-centrality bw-centrality + 1]]
       ; update node betweeness
-      foreach tpath [ask ? [set city-bw-centrality city-bw-centrality + 1]]
+      foreach tpath [? -> ask ? [set city-bw-centrality city-bw-centrality + 1]]
       ; update shortest path table
       table:put shortest-paths (list [who] of c1 [who] of c2) path table:put shortest-paths (list [who] of c2 [who] of c1) (rev path)
       ; update nw distance table
@@ -159,10 +159,10 @@ to network:update-cities-nw-vars
   ask cities [
     set city-bw-centrality city-bw-centrality * 2 / (n * (n - 1)) 
     let otherids ([who] of other cities)
-    let distances map [table:get nw-distances (list who ?)] otherids
-    set city-accessibilities list-times-element-wise (map [[city-population] of city ?] otherids) (map [exp ( - ? / accessibility-decay)] distances)
+    let distances map [? -> table:get nw-distances (list who ?)] otherids
+    set city-accessibilities list-times-element-wise (map [? -> [city-population] of city ?] otherids) (map [? -> exp ( - ? / accessibility-decay)] distances)
     set city-accessibility mean city-accessibilities
-    set city-closeness-centrality mean (map [diag / ?] distances)
+    set city-closeness-centrality mean (map [? -> diag / ?] distances)
     
   ]
   
@@ -200,7 +200,7 @@ to network:simple-connexification
     ; -> connects the closest cities, what the algo should do in first step  - not exactly, depends on connex comps order (not deterministic ?)
     
     ; totally dirty : O(n^2)
-    ask one-of cities with-min [min map [distance ?] to-list (other cities)] [create-road-with one-of ((other cities) with-min [distance myself])]
+    ask one-of cities with-min [min map [? -> distance ?] to-list (other cities)] [create-road-with one-of ((other cities) with-min [distance myself])]
     
     ;connexify-network cities roads
     network-utils:connexify-network-link-projection
@@ -219,11 +219,11 @@ end
 to network:import-nw-from-csv [prefix]
   let cities-coords read-numeric-csv-as-row-list (word prefix "_cities.csv") ";"
   
-  foreach cities-coords [create-cities 1 [setxy item 0 ? item 1 ? set id item 2 ?]]
+  foreach cities-coords [? -> create-cities 1 [setxy item 0 ? item 1 ? set id item 2 ?]]
   
   let roads-ids read-numeric-csv-as-row-list (word prefix "_roads.csv") ";"
   
-  foreach roads-ids [ask one-of cities with [id = first ?] [let c2 one-of cities with [id = last ?] if not road-neighbor? c2 [create-road-with c2]]]
+  foreach roads-ids [? -> ask one-of cities with [id = first ?] [let c2 one-of cities with [id = last ?] if not road-neighbor? c2 [create-road-with c2]]]
   
   display:display-network
 end

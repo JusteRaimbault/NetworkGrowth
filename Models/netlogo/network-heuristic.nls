@@ -56,12 +56,13 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
   
     ; gravity breakdown
     ; first get possible new link, sorting on strongest euclidian potentials
-    let gvals [] foreach table:keys cities-interaction-table [if member? "euclidian" ? [let g table:get cities-interaction-table ? set gvals lput (list g (first ?) (item 1 ?)) gvals]]
-    let potential-breakdowns sublist (sort-by [first ?1 > first ?2] gvals) 0 (min (list (length gvals) (5 * #-max-new-links)))
+    let gvals [] foreach table:keys cities-interaction-table [? -> if member? "euclidian" ? [let g table:get cities-interaction-table ? set gvals lput (list g (first ?) (item 1 ?)) gvals]]
+    let potential-breakdowns sublist (sort-by [[?1 ?2] -> first ?1 > first ?2] gvals) 0 (min (list (length gvals) (5 * #-max-new-links)))
     ; then breakdown if difference with network potential smaller than threshold
 
     let bpot []
     foreach potential-breakdowns [ 
+      ? ->
        let vn table:get cities-interaction-table (list (item 1 ?) (item 2 ?) "network") let vr first ?
      
        set bpot lput (list (vn / vr) (item 1 ?) (item 2 ?)) bpot
@@ -69,7 +70,8 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
     ]
   
     ; sort on breakdown potentials
-    foreach sublist sort-by [first ?1 < first ?2] bpot 0 #-max-new-links [   
+    foreach sublist sort-by [[?1 ?2] -> first ?1 < first ?2] bpot 0 #-max-new-links [   
+      ? ->
        let c1 city (item 1 ?) let c2 city (item 2 ?)
        ask c1 [
          if not road-neighbor? c2 [create-road-with c2 [network:new-road]]
@@ -91,6 +93,7 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
        ask o [
          let vals [] let dests to-list other cities
          foreach dests [
+          ? ->
            ask ? [
              ifelse table:has-key? cities-interaction-table (list [who] of o who "euclidian") [
                set vals lput ((table:get cities-interaction-table (list [who] of o who "euclidian"))^ random-breakdown-hierarchy) vals
@@ -102,6 +105,7 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
          let i 0 let vtot sum vals let v 0 set r random-float 1
          if vtot > 0 [
            foreach vals [
+            ? ->
              set v v + (? / vtot) if v > vtot [set d item i dests] set i i + 1
            ]
          ]
@@ -138,6 +142,7 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
        let mpot max pots let mcost max costs let maxpair []
        let m min pots - cost-tradeoff * mcost let i 0
        foreach pots [
+        ? ->
          let gain (? / mpot) -  (cost-tradeoff * (item i costs) / mcost)
          if gain > m [set m gain set maxpair item i pairs]
          set i i + 1

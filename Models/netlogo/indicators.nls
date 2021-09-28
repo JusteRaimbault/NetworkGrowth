@@ -35,7 +35,7 @@ end
 ; update tables
 to indicators:update-indicators
   let current-time ticks
-  foreach indicator-sample-patches [
+  foreach indicator-sample-patches [? ->
      ask ? [
        table:put patch-values-table (list current-time "patch-population" pxcor pycor) patch-population
        table:put patch-values-table (list current-time "patch-distance-to-road" pxcor pycor) patch-distance-to-road
@@ -62,13 +62,13 @@ to-report indicators:lagged-correlation [var1 var2 tau t0]
   if tau > 0 [set firstvar var2 set secvar var1]
   let t (tau + 1 + t0)
   repeat (current-time - tau - 1 - t0) [
-    foreach indicator-sample-patches [ask ? [
+    foreach indicator-sample-patches [? -> ask ? [
        set x lput ((table:get patch-values-table (list t firstvar [pxcor] of ? [pycor] of ?)) - (table:get patch-values-table (list (t - 1) firstvar [pxcor] of ? [pycor] of ?))) x
        set y lput ((table:get patch-values-table (list (t - tau) secvar [pxcor] of ? [pycor] of ?)) - (table:get patch-values-table (list (t - tau - 1) secvar [pxcor] of ? [pycor] of ?))) y
     ]]
     set t t + 1
   ]
-  let mx mean x set x map [? - mx] x let my mean y set y map [? - my] y
+  let mx mean x set x map [? -> ? - mx] x let my mean y set y map [? -> ? - my] y
   report mean (list-times-element-wise x y) / (standard-deviation x * standard-deviation y)
 end
 
@@ -98,13 +98,13 @@ end
 ; correlation between two vars
 to-report indicators:correlation [var1 var2 time]
   let x [] let y []
-  foreach indicator-sample-patches [
+  foreach indicator-sample-patches [? -> 
     ask ? [
       set x lput (table:get patch-values-table (list time var1 [pxcor] of ? [pycor] of ?)) x
       set y lput (table:get patch-values-table (list time var2 [pxcor] of ? [pycor] of ?)) y
     ]
   ]
-  let mx mean x set x map [? - mx] x let my mean y set y map [? - my] y
+  let mx mean x set x map [? -> ? - mx] x let my mean y set y map [? -> ? - my] y
   report mean (list-times-element-wise x y) / (standard-deviation x * standard-deviation y)
 end
 
@@ -144,7 +144,7 @@ end
 ;  Normalized by world diag
 to-report indicators:network:diameter
   let diag sqrt (world-width ^ 2 + world-height ^ 2)
-  report max map [sum map [[road-length] of ?] ?] (utils:table-values shortest-paths) / diag
+  report max map [? -> sum map [?? -> [road-length] of ??] ?] (utils:table-values shortest-paths) / diag
 end
 
 
@@ -153,7 +153,7 @@ end
 ;  Normalized by world diagonal
 to-report indicators:network:mean-path-length
   let diag sqrt (world-width ^ 2 + world-height ^ 2)
-  report (mean map [sum map [[road-length] of ?] ?] (utils:table-values shortest-paths)) / diag
+  report (mean map [? -> sum map [?? -> [road-length] of ??] ?] (utils:table-values shortest-paths)) / diag
 end
 
 ;;
@@ -202,11 +202,11 @@ to indicators:export-nw [file-prefix]
   let cities-file (word file-prefix "_cities.csv")
   let roads-file (word file-prefix "_roads.csv")
   
-  foreach cities-coords [
+  foreach cities-coords [? -> 
     print-in-file cities-file implode-with-delimiter ? ";"
   ]
   
-  foreach roads-ids [
+  foreach roads-ids [? -> 
     print-in-file roads-file implode-with-delimiter ? ";"
   ]
   

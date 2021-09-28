@@ -5,7 +5,7 @@
 
 to-report utils:table-values [table]
   let res []
-  foreach table:keys table [
+  foreach table:keys table [? ->
     set res lput table:get table ? res 
   ]
   report res

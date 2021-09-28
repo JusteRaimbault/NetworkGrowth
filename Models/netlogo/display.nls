@@ -40,7 +40,11 @@ to display:display-patches
       ;let ma 1 let mi 0
       ;ifelse ma > mi [ask patches [set pcolor scale-color red sp-density mi ma]]
       ;[ask patches [set pcolor black]]
-      if ma > mi [ask patches with [patch-population > 1] [set pcolor gradient:scale [[255 255 255][255 0 0]] (ln patch-population-share) mi ma]]
+      if ma > mi [ask patches with [patch-population > 1] [
+        ;set pcolor gradient:scale [[255 255 255][255 0 0]] (ln patch-population-share) mi ma
+        set pcolor scale-color red (ln patch-population-share) mi ma
+        ]
+      ]
     ]
   ]
   

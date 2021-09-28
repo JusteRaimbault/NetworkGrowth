@@ -118,6 +118,7 @@ to network-euclidian:add-local-links-neigh-gravity
   show qv
   
   foreach table:keys cities-interaction-table [
+    ? ->
      if table:get cities-interaction-table ? > qv [
         let c1 city (first ?) let c2 city (last ?)
         ask c1 [
@@ -180,6 +181,7 @@ end
 to network-euclidian:create-shortcuts [threshold number]
   let all-pairs []
   foreach table:keys nw-relative-speeds [
+    ? ->
     if table:get nw-relative-speeds ? < threshold [set all-pairs lput (list ? ([city-population] of city first ? + [city-population] of city last ?)) all-pairs]
   ]
   
@@ -187,6 +189,7 @@ to network-euclidian:create-shortcuts [threshold number]
   let pairs n-of (min (list number (length all-pairs))) all-pairs
   
   foreach pairs [
+    ? ->
      ask city first first ? [if not link-neighbor? city last first ? [create-road-with city last first ? [network:new-road]]]
   ]
   

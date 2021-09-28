@@ -64,22 +64,22 @@ end
 
 
 
-to-report my-singular-link-breed
-  foreach context:link-breed-singular-names [
-     if runresult (word "is-" ? "? self") [report ?]
-  ]
-  report "LINK"
-end
+;to-report my-singular-link-breed
+;  foreach context:link-breed-singular-names [ ? ->
+;     if runresult (word "is-" ? "? self") [report ?]
+;  ]
+;  report "LINK"
+;end
 
 
 
 
-to-report my-link-breed
-  foreach context:link-breed-names [
-     if runresult (word "is-" ? "? self") [report ?]
-  ]
-  report "LINKS"
-end
+;to-report my-link-breed
+;  foreach context:link-breed-names [
+;     if runresult (word "is-" ? "? self") [report ?]
+;  ]
+;  report "LINKS"
+;end
 
 
 

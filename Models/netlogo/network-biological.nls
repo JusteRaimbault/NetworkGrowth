@@ -32,7 +32,7 @@ end
 ;
 to network-biological:evolve
   
-  foreach [1 2 4] [
+  foreach [1 2 4] [ ? ->
     repeat ? * network-biological-steps [  
       network-biological:go 
     ]
@@ -253,7 +253,7 @@ end
 ; keep only the larger connex component
 to network-biological:keep-connex-component
   nw:set-context biological-network-nodes biological-network-links
-  let clusters nw:weak-component-clusters let giant first sort-by [count ?1 > count ?2] clusters
+  let clusters nw:weak-component-clusters let giant first sort-by [[?1 ?2] -> count ?1 > count ?2] clusters
   ask biological-network-nodes with [not member? self giant] [ask my-links [die] die]
 end
 
@@ -272,7 +272,7 @@ to network-biological:simplify-network
     let current-node biological-network-nodes with [count my-biological-network-links < 3]
     ask current-node [
        ifelse count my-biological-network-links = 1 [ask one-of my-biological-network-links [die] die][
-         let ends [] let l 0 let d 0 foreach to-list my-biological-network-links [set ends lput [other-end] of ? ends ask ? [set l l + bio-link-length set d d + diameter die]]
+         let ends [] let l 0 let d 0 foreach to-list my-biological-network-links [? -> set ends lput [other-end] of ? ends ask ? [set l l + bio-link-length set d d + diameter die]]
          ask first ends [create-biological-network-link-with last ends [set bio-link-length l set diameter d / 2]] die
        ]
     ]

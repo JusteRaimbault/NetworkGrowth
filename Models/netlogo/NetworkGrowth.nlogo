@@ -1,4 +1,4 @@
-extensions [table pathdir nw matrix context gradient morphology shell]
+extensions [table nw matrix context morphology shell pathdir] ;  gradient
 
 ;;;;
 ;; Mesoscopic Co-evolution
@@ -330,8 +330,8 @@ biological-network-real-links-own [
 GRAPHICS-WINDOW
 4
 10
-664
-691
+662
+669
 -1
 -1
 13.0
@@ -363,7 +363,7 @@ gravity-radius
 gravity-radius
 0
 10000
-2229
+2229.0
 1
 1
 NIL
@@ -378,7 +378,7 @@ population-growth-rate
 population-growth-rate
 0
 3000
-0
+0.0
 1
 1
 NIL
@@ -408,7 +408,7 @@ density-diffusion-steps
 density-diffusion-steps
 0
 6
-1
+1.0
 1
 1
 NIL
@@ -567,7 +567,7 @@ SLIDER
 #-max-new-links
 0
 100
-10
+10.0
 1
 1
 NIL
@@ -582,7 +582,7 @@ sp-max-pop
 sp-max-pop
 10000
 100000
-50100
+50100.0
 100
 1
 NIL
@@ -615,7 +615,7 @@ INPUTBOX
 732
 160
 seed
-20
+20.0
 1
 0
 Number
@@ -646,7 +646,7 @@ setup-center-number
 setup-center-number
 1
 40
-8
+8.0
 1
 1
 NIL
@@ -715,7 +715,7 @@ linear-aggreg-population-coef
 linear-aggreg-population-coef
 0
 1
-0
+0.0
 0.1
 1
 NIL
@@ -745,7 +745,7 @@ linear-aggreg-closeness-centrality-coef
 linear-aggreg-closeness-centrality-coef
 0
 1
-0
+0.0
 0.1
 1
 NIL
@@ -760,7 +760,7 @@ linear-aggreg-bw-centrality-coef
 linear-aggreg-bw-centrality-coef
 0
 1
-0
+0.0
 0.1
 1
 NIL
@@ -775,7 +775,7 @@ linear-aggreg-accessibility-coef
 linear-aggreg-accessibility-coef
 0
 1
-0
+0.0
 0.1
 1
 NIL
@@ -944,7 +944,7 @@ network-biological-steps
 network-biological-steps
 0
 100
-50
+50.0
 1
 1
 NIL
@@ -959,7 +959,7 @@ raster-row
 raster-row
 0
 100000
-34286
+34286.0
 1
 1
 NIL
@@ -974,7 +974,7 @@ raster-col
 raster-col
 0
 100000
-36190
+36190.0
 1
 1
 NIL
@@ -1029,7 +1029,7 @@ random-breakdown-hierarchy
 random-breakdown-hierarchy
 0
 3
-2
+2.0
 0.1
 1
 NIL
@@ -1094,7 +1094,7 @@ max-network-size
 max-network-size
 0
 1000
-200
+200.0
 1
 1
 NIL
@@ -1109,7 +1109,7 @@ final-time-step
 final-time-step
 -1
 10
-5
+5.0
 1
 1
 NIL
@@ -1494,9 +1494,8 @@ false
 0
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
-
 @#$#@#$#@
-NetLogo 5.3.1
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -1512,7 +1511,6 @@ true
 0
 Line -7500403 true 150 150 90 180
 Line -7500403 true 150 150 210 180
-
 @#$#@#$#@
 0
 @#$#@#$#@

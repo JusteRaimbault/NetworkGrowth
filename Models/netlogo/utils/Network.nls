@@ -122,7 +122,7 @@ to network-utils:connexify-network [vertices-agentset edges-agentset]
     ; rq : obliged to go through all pairs in nw. the same as merging clusters and taking closest point
     ; second alternative is less dirty in writing but as merging is O(n^2), should be longer.
     let mc1 nobody let mc2 nobody
-    foreach but-first clusters [
+    foreach but-first clusters [? ->
        let c2 ?
        ask c1 [ask c2 [let d distance myself if d < mi [set mi d set mc1 myself set mc2 self]]]
     ]
@@ -147,7 +147,7 @@ to network-utils:connexify-network-link-projection
   
   while [length clusters > 1] [
     ; cluster with most links
-    let c1 first clusters let ma sum [count my-links] of c1 foreach but-first clusters [let cl sum [count my-links] of ? if cl > ma [set c1 ? set ma cl]]
+    let c1 first clusters let ma sum [count my-links] of c1 foreach but-first clusters [? -> let cl sum [count my-links] of ? if cl > ma [set c1 ? set ma cl]]
     ;show c1
     let c1-links roads with [member? end1 c1 or member? end2 c1]
     ;show c1-links
@@ -155,6 +155,7 @@ to network-utils:connexify-network-link-projection
     let mi sqrt (world-width ^ 2 + world-height ^ 2)
     let mc1 nobody let mc2 nobody
     foreach clusters [
+      ? ->
       let c2 ? ;show c2
       if c2 != c1 [
         ask c2 [ask c1-links [let d distance-to-point [xcor] of myself [ycor] of myself if d < mi [set mi d set mc1 myself set mc2 self]]]
@@ -188,7 +189,7 @@ to network-utils:simplify-network
        ask other cities-here [
           ask my-roads with [[patch-here] of other-end != [patch-here] of myself] [set to-connect lput other-end to-connect die] die
        ]
-       foreach to-connect [if not road-neighbor? ? [create-road-with ? [network:new-road]]]
+       foreach to-connect [? -> if not road-neighbor? ? [create-road-with ? [network:new-road]]]
      ]
      set n count cities with [count cities-here > 1]
   ]
