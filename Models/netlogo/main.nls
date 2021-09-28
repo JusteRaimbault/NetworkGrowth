@@ -1,0 +1,53 @@
+
+;;
+;  main co-evol
+
+
+
+;;
+;
+to main:go-full-period
+  let stop? false
+  while [stop? != true] [
+    main:go
+    set stop? main:stopping-condition
+  ]
+end
+
+
+;;
+;
+to main:go
+  
+  ;; update density at each time step
+  density:update-density
+  
+  ;; update network shape and measures if needed
+  network:update-network
+  
+  ;; 
+  patches:update-patch-values
+  
+  
+  indicators:update-indicators
+  
+  display:update-display
+  
+  
+  tick
+  
+end
+
+;;
+;
+to-report main:stopping-condition
+  ;if stopping-mode = "time" [
+  ;  report (ticks = total-time-steps)
+  ;]
+  
+  report (ticks = final-time-step) or (indicators:network:size >= max-network-size)
+  
+end
+
+
+
