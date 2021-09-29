@@ -1,0 +1,60 @@
+val densityConf = Val[Int]
+val maxNewLinksNumber = Val[Double]
+
+val costTradeoff = Val[Double]
+
+val replication = Val[Int]
+
+val nwDiameter = Val[Double]
+val meanPathLength = Val[Double]
+val meanBwCentrality = Val[Double]
+val meanClosenessCentrality = Val[Double]
+val meanRelativeSpeed = Val[Double]
+val nwLength = Val[Double]
+val nwSize = Val[Double]
+
+
+
+// model
+// setup-experiment-network-growth [densityconf nw-heuristic new-links grav-radius grav-inflexion grav-hierarchy-weight grav-exponent brkdn-hierarchy brkdn-th cost-toff bio-threshold bio-steps nw-update-time rseed]
+val cmds = List("setup-experiment-network-growth ${densityConf} 4 ${maxNewLinksNumber} 1.0 1.0 0.0 1.0 1.0 0.0 ${costTradeoff} 0.0 1 1 ${replication}","run-experiment")
+val model = NetLogo6Task(workDirectory / "HEADLESS_NetworkGrowth.nlogo", cmds,embedWorkspace = true) set (
+    inputs += (densityConf,maxNewLinksNumber,costTradeoff,replication),
+    outputs += (densityConf,maxNewLinksNumber,costTradeoff,replication),
+    outputs += meanPathLength mapped "indicators:network:mean-path-length",
+    outputs += nwDiameter mapped "indicators:network:diameter",
+    outputs += meanBwCentrality mapped "indicators:network:mean-bw-centrality",
+    outputs += meanClosenessCentrality mapped "indicators:network:mean-city-closeness-centrality",
+    outputs += meanRelativeSpeed mapped "indicators:network:mean-relative-speed",
+    outputs += nwLength mapped "indicators:network:length",
+    outputs += nwSize mapped "indicators:network:size"
+)
+
+
+val purpose = "TEST_PSE_COST"
+//val purpose = "PSE_COST_LOCAL"
+
+val resdir = ((new java.text.SimpleDateFormat("yyyyMMdd_HHmm")).format(new java.util.Date()))+"_"+purpose
+
+val env = LocalEnvironment(10)
+
+PSEEvolution(
+  evaluation = model,
+  parallelism = 10,
+  termination = 10,
+  genome = Seq(
+    maxNewLinksNumber in (4.0,20.0),
+    densityConf in (1 to 50 by 1),
+    costTradeoff in (0.0,0.05)
+  ),
+  objective = Seq(
+    nwDiameter in (0.0 to 2.0 by 0.1),
+    meanPathLength in (0.0 to 2.0 by 0.1),
+    meanBwCentrality in (0.0 to 0.1 by 0.005),
+    meanClosenessCentrality in (0.0 to 0.1 by 0.005),
+    meanRelativeSpeed in (0.0 to 1.0 by 0.05),
+    nwLength in (0.0 to 1000.0 by 50.0)
+  ),
+  stochastic = Stochastic(seed = replication)//,
+  //distribution = Island(30 minutes)
+) on env hook (workDirectory / "pse" / resdir , frequency = 10)
