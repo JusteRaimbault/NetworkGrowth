@@ -1,7 +1,7 @@
 val densityConf = Val[Int]
 val maxNewLinksNumber = Val[Double]
 
-val replication = Val[Long]
+val replication = Val[Int]
 
 val nwDiameter = Val[Double]
 val meanPathLength = Val[Double]
@@ -16,7 +16,7 @@ val nwSize = Val[Double]
 // model
 // setup-experiment-network-growth [densityconf nw-heuristic new-links grav-radius grav-inflexion grav-hierarchy-weight grav-exponent brkdn-hierarchy brkdn-th cost-toff bio-threshold bio-steps nw-update-time rseed]
 val cmds = List("setup-experiment-network-growth ${densityConf} 0 ${maxNewLinksNumber} 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 ${replication}","run-experiment")
-val model = NetLogo6Task(workDirectory / "HEADLESS_MesoCoEvol.nlogo", cmds,embedWorkspace = true) set (
+val model = NetLogo6Task(workDirectory / "HEADLESS_NetworkGrowth.nlogo", cmds,embedWorkspace = true) set (
     inputs += (densityConf,maxNewLinksNumber,replication),
     outputs += (densityConf,maxNewLinksNumber,replication),
     outputs += meanPathLength mapped "indicators:network:mean-path-length",
