@@ -7,11 +7,13 @@
 ;;
 ;
 to main:go-full-period
-  let stop? false
-  while [stop? != true] [
-    main:go
-    set stop? main:stopping-condition
-  ]
+  carefully [
+    let stop? false
+    while [stop? != true] [
+      main:go
+      set stop? main:stopping-condition
+    ]
+  ][print (word "ERROR : " error-message)]
 end
 
 
