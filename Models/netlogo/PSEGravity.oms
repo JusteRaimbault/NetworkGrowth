@@ -6,7 +6,7 @@ val gravityInflexion = Val[Double]
 val gravityHierarchyWeight = Val[Double]
 val gravityHierarchyExponent = Val[Double]
 
-val replication = Val[Long]
+val replication = Val[Int]
 
 val nwDiameter = Val[Double]
 val meanPathLength = Val[Double]
@@ -20,10 +20,10 @@ val nwSize = Val[Double]
 
 // model
 // setup-experiment-network-growth [densityconf nw-heuristic new-links grav-radius grav-inflexion grav-hierarchy-weight grav-exponent brkdn-hierarchy brkdn-th cost-toff bio-threshold bio-steps nw-update-time rseed]
-val cmds = List("setup-experiment-network-growth ${densityConf} ${nwHeuristic} ${maxNewLinksNumber}  ${gravityRadius} ${gravityInflexion} ${gravityHierarchyWeight} ${gravityHierarchyExponent} ${breakdownHierarchy} ${breakdownThreshold} ${costTradeoff} ${bioThreshold} ${bioSteps} ${nwUpdateTime} ${replication}","run-experiment")
-val model = NetLogo6Task(workDirectory / "HEADLESS_MesoCoEvol.nlogo", cmds,embedWorkspace = true) set (
-    inputs += (densityConf,maxNewLinksNumber,replication),
-    outputs += (densityConf,maxNewLinksNumber,replication),
+val cmds = List("setup-experiment-network-growth ${densityConf} 2 ${maxNewLinksNumber} ${gravityRadius} ${gravityInflexion} ${gravityHierarchyWeight} ${gravityHierarchyExponent} 1.0 0.0 0.0 0.0 1 1 ${replication}","run-experiment")
+val model = NetLogo6Task(workDirectory / "HEADLESS_NetworkGrowth.nlogo", cmds,embedWorkspace = true) set (
+    inputs += (densityConf,maxNewLinksNumber,gravityRadius,gravityInflexion,gravityHierarchyWeight,gravityHierarchyExponent,replication),
+    outputs += (densityConf,maxNewLinksNumber,gravityRadius,gravityInflexion,gravityHierarchyWeight,gravityHierarchyExponent,replication),
     outputs += meanPathLength mapped "indicators:network:mean-path-length",
     outputs += nwDiameter mapped "indicators:network:diameter",
     outputs += meanBwCentrality mapped "indicators:network:mean-bw-centrality",
@@ -34,8 +34,8 @@ val model = NetLogo6Task(workDirectory / "HEADLESS_MesoCoEvol.nlogo", cmds,embed
 )
 
 
-val purpose = "TEST_PSE_RANDOM"
-//val purpose = "PSE_RANDOM_LOCAL"
+val purpose = "TEST_PSE_GRAVITY"
+//val purpose = "PSE_GRAVITY_LOCAL"
 
 val resdir = ((new java.text.SimpleDateFormat("yyyyMMdd_HHmm")).format(new java.util.Date()))+"_"+purpose
 
@@ -44,10 +44,14 @@ val env = LocalEnvironment(10)
 PSEEvolution(
   evaluation = model,
   parallelism = 10,
-  termination = 20,
+  termination = 10,
   genome = Seq(
     maxNewLinksNumber in (4.0,20.0),
-    densityConf in (1 to 50 by 1)
+    densityConf in (1 to 50 by 1),
+    gravityRadius in (10.0,5000.0),
+    gravityInflexion in (0.1,10.0),
+    gravityHierarchyWeight in (0.0,1.0),
+    gravityHierarchyExponent in (0.1,4.0)
   ),
   objective = Seq(
     nwDiameter in (0.0 to 2.0 by 0.1),
