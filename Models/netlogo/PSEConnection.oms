@@ -29,8 +29,8 @@ val model = NetLogo6Task(workDirectory / "HEADLESS_NetworkGrowth.nlogo", cmds,em
 )
 
 
-val purpose = "TEST_PSE_CONNECTION"
-//val purpose = "PSE_CONNECTION_LOCAL"
+//val purpose = "TEST_PSE_CONNECTION"
+val purpose = "PSE_CONNECTION_LOCAL"
 
 val resdir = ((new java.text.SimpleDateFormat("yyyyMMdd_HHmm")).format(new java.util.Date()))+"_"+purpose
 
@@ -39,7 +39,7 @@ val env = LocalEnvironment(10)
 PSEEvolution(
   evaluation = model,
   parallelism = 10,
-  termination = 20,
+  termination = 2000,
   genome = Seq(
     densityConf in (1 to 50 by 1)
   ),
@@ -53,4 +53,4 @@ PSEEvolution(
   ),
   stochastic = Stochastic(seed = replication)//,
   //distribution = Island(30 minutes)
-) on env hook (workDirectory / "pse" / resdir , frequency = 10)
+) on env hook (workDirectory / "pse" / resdir , frequency = 500)
