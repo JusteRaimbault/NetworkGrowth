@@ -46,7 +46,7 @@ PSEEvolution(
   parallelism = 10,
   termination = 2000,
   genome = Seq(
-    maxNewLinksNumber in (4.0,20.0),
+    maxNewLinksNumber in (1.0,10.0),
     densityConf in (1 to 50 by 1),
     gravityRadius in (10.0,5000.0),
     gravityInflexion in (0.1,10.0),
