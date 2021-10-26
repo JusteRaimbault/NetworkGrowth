@@ -139,8 +139,8 @@ to network:cache-nw-measures
       ; update nw distance table
       table:put nw-distances (list [who] of c1 [who] of c2) l table:put nw-distances (list [who] of c2 [who] of c1) l
       ; update relative speed table
-      let deucl 0 ask c1 [set deucl distance c2]
-      table:put nw-relative-speeds (list [who] of c1 [who] of c2) (deucl / l) table:put nw-relative-speeds (list [who] of c2 [who] of c1) (deucl / l)
+      let deucl 0 ask c1 [set deucl distance c2] let relspeed 0 if l != 0 [set relspeed (deucl / l)]
+      table:put nw-relative-speeds (list [who] of c1 [who] of c2) relspeed table:put nw-relative-speeds (list [who] of c2 [who] of c1) relspeed
       
       set pairs-total-weight pairs-total-weight + [patch-population] of c1 + [patch-population] of c2
       set j j + 1

@@ -165,7 +165,13 @@ end
 
 to test-experiment-network-growth
   ;setup-experiment-network-growth 10 1 5 300 20 0.5 1.3 1.3 0.7 1e-5 0.4 20 1 1
-  setup-experiment-network-growth 7 5 15.58 1.0 1.0 0.0 1.0 1.0 0.0 0.0 0.58 92.16 1 -1340717129
+  ;setup-experiment-network-growth 7 5 15.58 1.0 1.0 0.0 1.0 1.0 0.0 0.0 0.58 92.16 1 -1340717129
+  
+  ; random nw
+  ;setup-experiment-network-growth 5 0 1.0 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 1234
+  ;densityConf=8, maxNewLinksNumber=8.272735503193598, openmole$seed=-442946542568421367, replication=-81568629 ; bug: node same place?
+  setup-experiment-network-growth 8 0 8.272735503193598 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 -81568629
+  
   run-experiment
   ;indicators:compute-indicators
   network:cache-nw-measures
