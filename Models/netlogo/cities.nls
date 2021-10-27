@@ -43,7 +43,7 @@ end
 ; link patch <-> cities
 to cities:update-patches-closest-cities
   ask patches [
-    set patch-closest-city one-of (cities with-min [distance myself])
+    set patch-closest-city one-of ((cities with [center?]) with-min [distance myself])
     set patch-closest-city-distance distance patch-closest-city
   ]
 end
@@ -52,8 +52,8 @@ end
 ;;
 ;  update accessibilities
 to cities:update-accessibility
-  ask cities [
-    let otherids ([who] of other cities)
+  ask (cities with [center?]) [
+    let otherids ([who] of other (cities with [center?]))
     let distances map [? -> table:get nw-distances (list who ?)] otherids
     set city-accessibilities list-times-element-wise (map [? -> [city-population] of city ?] otherids) (map [? -> exp ( - ? / accessibility-decay)] distances)
     set city-accessibility mean city-accessibilities
@@ -64,7 +64,7 @@ end
 ;;
 ;  update city population
 to cities:update-cities-population
-  ask cities [set city-population sum [patch-population] of patches with [patch-closest-city = myself]]
+  ask (cities with [center?]) [set city-population sum [patch-population] of patches with [patch-closest-city = myself]]
   set cities-total-population sum [city-population] of cities
 end
 
@@ -82,7 +82,7 @@ to cities:fill-cities-interaction-table [mode]
   
   ;debug (word "... cities int table " mode)
   
-  let city-list to-list cities
+  let city-list to-list (cities with [center?])
   let i 0 let m 0 let m-key []
   foreach but-last city-list [
     ? ->
@@ -270,7 +270,8 @@ to cities:density-to-cities
            ;set population 1
            ;set population mean [sp-occupants] of (patches in-radius gravity-radius)
            ;ask patches in-radius gravity-radius [set sp-occupants 0 set sp-density 0]
-           setxy (xcor - 0.5 + random-float 1) (ycor - 0.5 + random-float 1) city:new-city]
+           setxy (xcor - 0.5 + random-float 1) (ycor - 0.5 + random-float 1) city:new-city
+        ]
        ]
     ]
     
@@ -409,7 +410,7 @@ to cities:update-cities-interaction-table [n1 n2 newcity]
   
   ask newcity [
     let c1 self let k1 who let m 0 let m-key []
-    ask (other cities in-radius 20) [ ; approximation radius computed as : r~ 1/sqrt(espilon) * Pmax / Pmin * rmin
+    ask (other cities with [center?] in-radius 20) [ ; approximation radius computed as : r~ 1/sqrt(espilon) * Pmax / Pmin * rmin
       let c2 self
       let k2 who let key (list k1 k2) let revkey (list k2 k1)
       if not (table:has-key? cities-interaction-table key or table:has-key? cities-interaction-table revkey) [
@@ -422,7 +423,12 @@ to cities:update-cities-interaction-table [n1 n2 newcity]
 end
 
 
+;;
+; must be used only for "centers": cities that are not road intersection
+;  -> O/D table computing for centers only
 to city:new-city
-  ;set color green set shape "circle"
+  set color green set shape "circle"
   ;set size max (list (3 * population / city-max-pop) 0.3)
+  ;set size 2
+  set center? true
 end

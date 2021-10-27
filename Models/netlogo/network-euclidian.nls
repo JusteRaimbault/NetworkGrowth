@@ -101,8 +101,8 @@ to network-euclidian:random-network
   ;let #-link floor (random-network-density * #-cities * (#-cities - 1) / 2)
   let #-link #-max-new-links
   repeat #-link [
-    ask one-of cities [
-      create-road-with one-of (other cities) with [not road-neighbor? myself]
+    ask one-of (cities with [center?]) [
+      create-road-with one-of (other cities) with [not road-neighbor? myself and center?]
     ]
   ]
 end

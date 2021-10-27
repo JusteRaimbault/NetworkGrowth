@@ -16,6 +16,8 @@ to network:update-network
     cities:update-patches-closest-cities
     cities:update-cities-population
     
+    ;show count cities with [center?]
+    
     ; add links in themselves
     network:grow-network
     
@@ -123,7 +125,7 @@ to network:cache-nw-measures
   ask roads [set road-length link-length set bw-centrality 0]
   ask cities [set city-bw-centrality 0]
   set shortest-paths table:make set nw-relative-speeds table:make set nw-distances table:make set pairs-total-weight 0
-  let clist to-list cities let i 0 let j 1
+  let clist to-list (cities with [center?]) let i 0 let j 1
   repeat (length clist - 1) [
     let c1 item i clist
     set j i + 1
@@ -156,9 +158,9 @@ end
 to network:update-cities-nw-vars
   let n count cities
   let diag sqrt (world-width ^ 2 + world-height ^ 2)
-  ask cities [
+  ask (cities with [center?]) [
     set city-bw-centrality city-bw-centrality * 2 / (n * (n - 1)) 
-    let otherids ([who] of other cities)
+    let otherids ([who] of other (cities with [center?]))
     let distances map [? -> table:get nw-distances (list who ?)] otherids
     set city-accessibilities list-times-element-wise (map [? -> [city-population] of city ?] otherids) (map [? -> exp ( - ? / accessibility-decay)] distances)
     set city-accessibility mean city-accessibilities
@@ -177,7 +179,7 @@ to network:compute-nw-distances
   nw:set-context cities roads
   ask roads [set road-length link-length]
   set nw-distances table:make
-  let clist to-list cities let i 0 let j 1
+  let clist to-list (cities with [center?]) let i 0 let j 1
   repeat (length clist - 1) [
     let c1 item i clist
     set j i + 1

@@ -139,7 +139,7 @@ to setup:setup-density
     repeat setup-center-number [
       let current-pop setup-max-pop / (i ^ setup-rank-size-exp) set i i + 1
       let current-patch one-of patches
-      create-cities 1 [move-to current-patch set city-population current-pop]
+      create-cities 1 [move-to current-patch set city-population current-pop set center? true]
       apply-monocentric-kernel "poisson" (sqrt (current-pop / (2 * pi * setup-center-density))) setup-center-density "patch-population" current-patch
     ]
   ]
@@ -172,7 +172,10 @@ to setup:setup-network
     ; cities already assumed setup
     network:simple-connexification
     ; add cities on the edge to avoid bord effect on network topology
-    create-cities setup-outside-links-number [let x 0 let y 0 ifelse random 2 = 0 [ifelse random 2 = 0[set x min-pxcor - 0.5][set x max-pxcor + 0.499] set y random-ycor][ifelse random 2 = 0 [set y max-pycor + 0.499][set y min-pycor - 0.5] set x random-xcor] setxy x y]
+    create-cities setup-outside-links-number [
+      set center? true
+      let x 0 let y 0 ifelse random 2 = 0 [ifelse random 2 = 0[set x min-pxcor - 0.5][set x max-pxcor + 0.499] set y random-ycor][ifelse random 2 = 0 [set y max-pycor + 0.499][set y min-pycor - 0.5] set x random-xcor] setxy x y
+    ]
     network:simple-connexification
   
   ]

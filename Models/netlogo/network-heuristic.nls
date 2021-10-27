@@ -88,7 +88,7 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
        ; do not recompute potentials at each step, ''parallel'' update
        
        ; random drawing
-       let stot sum [city-population ^ random-breakdown-hierarchy] of cities let s 0 let r random-float 1 let o one-of cities ask cities [set s s + ((city-population ^ random-breakdown-hierarchy) / stot) if s > r [set o self]]
+      let stot sum [city-population ^ random-breakdown-hierarchy] of cities let s 0 let r random-float 1 let o one-of cities ask (cities with [center?]) [set s s + ((city-population ^ random-breakdown-hierarchy) / stot) if s > r [set o self]]
        let d one-of cities with [self != o]
        ask o [
          let vals [] let dests to-list other cities
@@ -131,8 +131,8 @@ to network-heuristic:heuristic-nw-generation [iterative? mode]
     repeat #-max-new-links [
        ; find the pair with max gain
        ; could use euclidian or network potential - however if high network potential, probably already connected - stick to euclidian (for now ?)
-       let pots [] let costs [] let pairs [] ask cities [
-         ask other cities with [not road-neighbor? myself] [
+      let pots [] let costs [] let pairs [] ask (cities with [center?]) [
+         ask other cities with [not road-neighbor? myself and center?] [
            ifelse table:has-key? cities-interaction-table (list [who] of myself who "euclidian") [set pots lput (table:get cities-interaction-table (list [who] of myself who "euclidian")) pots][set pots lput 0 pots]
            set costs lput (table:get nw-distances (list [who] of myself who) * table:get nw-relative-speeds (list [who] of myself who)) costs
            set pairs lput (list myself self) pairs

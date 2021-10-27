@@ -324,6 +324,8 @@ cities-own [
   city-accessibilities
   city-accessibility
 
+  center?
+
 ]
 
 
@@ -378,8 +380,6 @@ biological-network-links-own [
 biological-network-real-links-own [
   real-link-length
 ]
-
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 4

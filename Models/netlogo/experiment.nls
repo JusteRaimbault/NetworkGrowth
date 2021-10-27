@@ -158,7 +158,7 @@ to setup-experiment-network-growth [densityconf nw-heuristic new-links grav-radi
   
   ;
   ;set max-network-size sum [patch-population] of patches / 6 ; f(population)
-  set max-network-size 200
+  set max-network-size 100
   
 end
 
@@ -170,7 +170,11 @@ to test-experiment-network-growth
   ; random nw
   ;setup-experiment-network-growth 5 0 1.0 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 1234
   ;densityConf=8, maxNewLinksNumber=8.272735503193598, openmole$seed=-442946542568421367, replication=-81568629 ; bug: node same place?
-  setup-experiment-network-growth 8 0 8.272735503193598 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 -81568629
+  ;setup-experiment-network-growth 8 0 8.272735503193598 1.0 1.0 0.0 1.0 1.0 1.0 0.0 0.0 1 1 -81568629
+  
+  ; breakdown: memory issues
+  ; breakdownHierarchy=2.6911839804999436, breakdownThreshold=2.062027914975298, densityConf=24, maxNewLinksNumber=3.0328084889762197, openmole$seed=-442946542568422506, replication=-1869443319
+  setup-experiment-network-growth 24 3 3.0328084889762197 1.0 1.0 0.0 1.0 2.6911839804999436 2.062027914975298 0.0 0.0 1 1 -1869443319
   
   run-experiment
   ;indicators:compute-indicators

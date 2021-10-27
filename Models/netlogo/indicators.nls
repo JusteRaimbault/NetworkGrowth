@@ -159,19 +159,19 @@ end
 ;;
 ;  bw centrality, normalized by number of paths considered
 to-report indicators:network:mean-bw-centrality
-  let n count cities
+  let n count cities with [center?]
   report (mean [bw-centrality] of roads) * 2 / (n * (n - 1))
 end
 
 ;;
 ; nodes bw centrality
 to-report indicators:network:mean-city-bw-centrality
-  let n count cities
+  let n count cities with [center?]
   report (mean [city-bw-centrality] of cities) * 2 / (n * (n - 1))
 end
 
 to-report indicators:network:mean-city-closeness-centrality
-  let n count cities
+  let n count cities with [center?]
   report (mean [city-closeness-centrality] of cities) / n
 end
 
@@ -190,7 +190,8 @@ end
 ;;
 ; number of links
 to-report indicators:network:size
-  report count links
+  ;report count links
+  report count cities
 end
 
 
