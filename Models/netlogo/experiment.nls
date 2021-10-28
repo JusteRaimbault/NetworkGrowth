@@ -64,7 +64,7 @@ to setup-experiment [growth-rate density-alpha diffusion-steps diffusion la-pop-
   
   ; time stopping condition
   set final-time-step (floor total-time)
-  set max-network-size 100000
+  set max-network-size 100
   
   set seed rseed
   

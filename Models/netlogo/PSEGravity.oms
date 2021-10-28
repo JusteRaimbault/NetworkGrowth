@@ -39,14 +39,14 @@ val purpose = "PSE_GRAVITY_LOCAL"
 
 val resdir = ((new java.text.SimpleDateFormat("yyyyMMdd_HHmm")).format(new java.util.Date()))+"_"+purpose
 
-val env = LocalEnvironment(10)
+val env = LocalEnvironment(5)
 
 PSEEvolution(
   evaluation = model,
-  parallelism = 10,
-  termination = 2000,
+  parallelism = 5,
+  termination = 10000,
   genome = Seq(
-    maxNewLinksNumber in (1.0,10.0),
+    maxNewLinksNumber in (5.0,10.0),
     densityConf in (1 to 50 by 1),
     gravityRadius in (10.0,5000.0),
     gravityInflexion in (0.1,10.0),
