@@ -147,7 +147,7 @@ to setup-experiment-network-growth [densityconf nw-heuristic new-links grav-radi
   
   
   ; fixed edge count
-  set final-time-step -1
+  set final-time-step 10
   
   set seed rseed
     
