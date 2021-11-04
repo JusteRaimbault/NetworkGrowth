@@ -36,12 +36,12 @@ val purpose = "PSE_COST_LOCAL"
 
 val resdir = ((new java.text.SimpleDateFormat("yyyyMMdd_HHmm")).format(new java.util.Date()))+"_"+purpose
 
-val env = LocalEnvironment(10)
+val env = LocalEnvironment(3)
 
 PSEEvolution(
   evaluation = model,
-  parallelism = 10,
-  termination = 2000,
+  parallelism = 3,
+  termination = 10000,
   genome = Seq(
     maxNewLinksNumber in (4.0,20.0),
     densityConf in (1 to 50 by 1),
