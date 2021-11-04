@@ -33,23 +33,73 @@ November 4th 2021
 
 % Processes underlying the growth of road networks are diverse and complementary, as for example with the combination of self-organisation and top-down planning (Barthelemy et al., 2013). Multiple generative models, more or less parsimonious and data-driven, have been introduced in the literature to reproduce existing networks and provide potential explanations on main processes driving their growth
 
-\cite{cats2021multi}
+\textit{Road networks functionally shaping territories \cite{dupuy1987vers}}
 
-\cite{szell2021growing}
+\smallskip
 
-\cite{cats2020modelling}
+$\rightarrow$ path-dependence and implications for sustainable territorial systems on multiple time scales
+
+\bigskip
+
+\textit{Multiple driving processes \cite{barthelemy2013self}}
+
+\smallskip
+
+$\rightarrow$ which models to understand such growth?
+
+\bigskip
+
+Examples of transportation network growth models:
+
+\smallskip
+
+\begin{itemize}
+	\item Transportation governance \cite{raimbault2021introducing}	
+	\item Investments in public transport \cite{cats2020modelling}
+	\item Multi-modal networks \cite{cats2021multi}
+	\item Bicycle networks design \cite{szell2021growing}
+	\item Network morphogenesis \cite{tirico2018morphogenesis}
+	\item Geometrical processes \cite{courtat2011mathematics}
+\end{itemize}
+
+
+
+
+
+
+
 
 
 
 }
 
 
-\sframe{}{
+\sframe{Research objective}{
 
 % Whereas each model includes plausible mechanisms and often yields reasonable empirical results, a systematic and quantitative comparison of such models remains to be explored. We propose in this contribution such a benchmark of road network growth models.
 
+$\rightarrow$ Models proposed in the literature are validated/explored in their own context, often not compared beyond null models
+
+\bigskip
+
+$\rightarrow$ Need for model benchmarks to build integrated theories
+
+
+\bigskip
+\bigskip
+
+\textbf{Research objective:}
+
+\medskip
+
+\textit{Compare road network growth models with diverse types of processes, integrated into a common multi-modeling framework, with a focus on feasible space using a diversity search algorithm}
+
+
+
 }
 
+
+\section{Model}
 
 
 \sframe{Road network generation multi-model}{
@@ -61,7 +111,7 @@ At each time step, with a fixed population density:
 
 \begin{enumerate}
 	\item Add new nodes preferentially to population and connect them
-	\item \justify Variable heuristic for new links, among: nothing, random, gravity-based deterministic breakdown, gravity-based random breakdown (from \cite{schmitt2014modelisation}), cost-benefits (from \cite{louf2013emergence}), biological network generation (based on \cite{tero2010rules})
+	\item \justify Variable heuristic for new links, among: nothing, random, \textbf{gravity-based deterministic breakdown} \cite{raimbault2019second}, gravity-based random breakdown (\cite{schmitt2014modelisation}), cost-benefits (\cite{louf2013emergence}), \textbf{biological network generation} (\cite{tero2010rules})
 \end{enumerate}
 
 \medskip
@@ -73,7 +123,27 @@ At each time step, with a fixed population density:
 }
 
 
-\sframe{Biological network generation}{
+\sframe{Deterministic breakdown link addition}{
+
+Model explored in \cite{raimbault2019second}
+
+\bigskip
+
+\begin{enumerate}
+\item Gravity potential given by
+\[
+V_{ij}\left(d\right) \textrm{=} \left[ \left(1 - k_h\right) \textrm{+} k_h \cdot \left( \frac{P_i P_j}{P^2} \right)^{\gamma} \right]\cdot \exp{\left( -\frac{d}{r_g \left(1 \textrm{+} d\textrm{/}d_0\right)} \right)}
+\]
+
+\item $k\cdot N_L$ links are selected with lowest $V_{ij}\left(d_N\right)\textrm{/}V_{ij}\left(d_{ij}\right)$ (strong demand compared to offer), among which the $N_L$ links with this highest rate (lest costly links) are realised
+\item Network is planarised
+\end{enumerate}
+}
+
+
+
+
+\sframe{Biological network link addition}{
 
 Model introduced by~\cite{tero2010rules}: exploration and reinforcement by a slime mould searching for ressources
 
@@ -97,7 +167,7 @@ Model introduced by~\cite{tero2010rules}: exploration and reinforcement by a sli
 
 
 
-\sframe{Biological Network generation}{
+\sframe{Biological network link addition}{
 
 Adding new links with biological heuristic:
 
@@ -116,7 +186,7 @@ Adding new links with biological heuristic:
 
 \centering
 
-\frame{\includegraphics[width=0.6\textwidth]{figures/7-1-1-fig-networkgrowth-bioexample.jpg}}
+\frame{\includegraphics[width=0.55\textwidth]{figures/7-1-1-fig-networkgrowth-bioexample.jpg}}
 
 \footnotesize
 
@@ -132,7 +202,7 @@ Adding new links with biological heuristic:
 
 \centering
 
-\vspace{-0.2cm}
+\resizebox{0.95\linewidth}{!}{
 \begin{tabular}{|p{1.5cm}|c|c|c|c|c|}
   \hline
 Heuristic & Param. & Name & Process & Domain & Default\\
@@ -148,6 +218,8 @@ Cost-benefits & $\lambda$ & compromise & compromise & $[0;0.1]$ & $0.05$ \\\hlin
 \multirow{2}{*}{Biological}& $n_b$ & iterations & convergence & $[40;100]$ & $50$ \\\cline{2-6}
 & $\theta_b$ & biological th.& threshold & $[0.1;1.0]$ & $0.5$ \\\hline
 \end{tabular}
+}
+
 
 }
 
@@ -161,13 +233,16 @@ Cost-benefits & $\lambda$ & compromise & compromise & $[0;0.1]$ & $0.05$ \\\hlin
 
 \textbf{Real setup: } Population density raster at 500m resolution (European Union, from Eurostat)
 
+\textbf{Initial network:} skeleton connecting centres
+
 \bigskip
 
-\centering
-\frame{\includegraphics[width=0.35\textwidth]{figures/coevol_example_synthsetup}}\hspace{0.1cm}
-\frame{\includegraphics[width=0.35\textwidth]{figures/coevol_example-realsetup}}
+\begin{center}
+\frame{\includegraphics[width=0.3\textwidth]{figures/coevol_example_synthsetup}}\hspace{0.3cm}
+\frame{\includegraphics[width=0.3\textwidth]{figures/coevol_example-realsetup}}
+\end{center}
 
-\textbf{Stopping conditions: } fixed final time; fixed total population; fixed network size.
+\textbf{Stopping conditions:} fixed network size or maximal steps
 
 }
 
@@ -186,11 +261,7 @@ Network Topology measured by:
 
 }
 
-\sframe{}{
 
-% The models are integrated into the spatialdata scala library (Raimbault et al., 2020) and into the OpenMOLE software for model exploration and validation (Reuillon et al., 2013).
-
-}
 
 
 
@@ -214,9 +285,44 @@ Network Topology measured by:
 
 % We then run a diversity search algorithm, the Pattern Space Exploration algorithm (Cherel et al., 2015), for each model with their own free parameters and with the population distribution also as input parameter among the sampled areas. This algorithm is specifically tailored to provide feasible spaces of model outputs in relatively low dimensions.
 
+\begin{center}
 \includegraphics[width=\linewidth]{figures/pone_0138212_g002.png}
+\end{center}
+
+\textit{Source: \cite{cherel2015beyond}}
+
+}
 
 
+
+\sframe{OpenMOLE integration}{
+
+% The models are integrated into the spatialdata scala library (Raimbault et al., 2020) and into the OpenMOLE software for model exploration and validation (Reuillon et al., 2013).
+
+$\rightarrow$ Models implemented in NetLogo (scala implementation in progress \cite{raimbault2020scala})
+
+\medskip
+
+$\rightarrow$ Integrated into OpenMOLE model exploration open source software \cite{reuillon2013openmole}
+
+\medskip
+
+\begin{center}
+\includegraphics[height=0.13\textheight]{figures/iconOM.png}
+\includegraphics[height=0.13\textheight]{figures/openmole.png}
+\end{center}
+
+\medskip
+
+\textit{Enables seamlessly (i) model embedding; (ii) access to HPC resources; (iii) exploration and optimization algorithms (including PSE)}
+
+\medskip
+
+\url{https://openmole.org/}
+
+\bigskip
+
+$\rightarrow$ PSE run separately for each model for 5000 generations
 
 }
 
@@ -227,18 +333,21 @@ Network Topology measured by:
 
 \centering
 
-\includegraphics[width=\linewidth]{figures/scatter_pse_allmodels.png}
+\includegraphics[width=0.9\linewidth]{figures/scatter_pse_allmodels.png}
 
 
 }
 
 
-\sframe{Hypervolumes}{
+\sframe{Hypervolume intersections}{
 
 \begin{center}
 \includegraphics[width=0.7\linewidth]{figures/pointclouds-overlap.png}
 \end{center}
 
+\footnotesize
+
+\textit{Directed relative overlaps between estimated hypervolumes of point clouds}
 
 
 }
@@ -248,6 +357,24 @@ Network Topology measured by:
 \sframe{Discussion}{
 
 % This quantitatively confirms the complementarity of diverse processes driving road network growth, and the need for a plurality of models to explain it.
+
+$\rightarrow$ Complementarity of models to generate diverse networks: models not only with different purposes but also "output contexts"
+
+\bigskip
+
+$\rightarrow$ Comparison with real networks / calibration (work in progress on GHS FUAs, see \cite{raimbault2019urban} for OSM 50km windows)
+
+\bigskip
+
+$\rightarrow$ Extension with other models \cite{molinero2020model} \cite{tirico2018morphogenesis} (work in progress)
+
+\bigskip
+
+$\rightarrow$ Diversity search algorithms and dimensionality reduction (work in progress)
+
+\bigskip
+
+$\rightarrow$ Application: link between calibrated parameters and sustainability indicators? \cite{raimbault2018multi}
 
 }
 
@@ -259,20 +386,28 @@ Network Topology measured by:
 
 \justify
 
-$\rightarrow$ 
+$\rightarrow$ Complementarity of models and processes for road network growth (similar result for population density morphogenesis \cite{raimbault2020comparison}
 
 \medskip
 
-$\rightarrow$ 
+$\rightarrow$ Which models to integrate? Open science/platforms for model sharing and benchmarking; typology/classification of processes, models, disciplines?
 
 \bigskip
 \bigskip
 
 
+\textbf{Use and contribute to OpenMOLE}
 
-\textbf{Open repositories}
+\url{https://openmole.org}
+
 
 \medskip
+
+
+\bigskip
+
+\textbf{Open repository}
+
 
 \url{https://github.com/JusteRaimbault/NetworkGrowth} 
 
