@@ -174,7 +174,10 @@ to test-experiment-network-growth
   
   ; breakdown: memory issues
   ; breakdownHierarchy=2.6911839804999436, breakdownThreshold=2.062027914975298, densityConf=24, maxNewLinksNumber=3.0328084889762197, openmole$seed=-442946542568422506, replication=-1869443319
-  setup-experiment-network-growth 24 3 3.0328084889762197 1.0 1.0 0.0 1.0 2.6911839804999436 2.062027914975298 0.0 0.0 1 1 -1869443319
+  ;setup-experiment-network-growth 24 3 3.0328084889762197 1.0 1.0 0.0 1.0 2.6911839804999436 2.062027914975298 0.0 0.0 1 1 -1869443319
+  
+  ; biological
+  setup-experiment-network-growth 24 5 7 1.0 1.0 0.0 1.0 1.0 0.0 0.0 0.6 40 1 42
   
   run-experiment
   ;indicators:compute-indicators
