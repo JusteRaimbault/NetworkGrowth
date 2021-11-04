@@ -5,7 +5,7 @@
 \begin{document}
 
 
-\title[MATSim Sensitivity analysis]{Sensitivity analysis of the MATSim transport model}
+\title[Benchmarking road network growth models]{Benchmarking road network growth models}
 
 \author[Raimbault]{J.~Raimbault$^{1,2,3,\ast}$\\\medskip
 $^{\ast}$\texttt{j.raimbault@ucl.ac.uk}
@@ -26,8 +26,12 @@ November 4th 2021
 
 
 
-\sframe{}{
+\section{Introduction}
 
+\sframe{Modeling road network growth}{
+
+
+% Processes underlying the growth of road networks are diverse and complementary, as for example with the combination of self-organisation and top-down planning (Barthelemy et al., 2013). Multiple generative models, more or less parsimonious and data-driven, have been introduced in the literature to reproduce existing networks and provide potential explanations on main processes driving their growth
 
 \cite{cats2021multi}
 
@@ -40,8 +44,18 @@ November 4th 2021
 }
 
 
+\sframe{}{
 
-\sframe{Road network generation algorithm}{
+% Whereas each model includes plausible mechanisms and often yields reasonable empirical results, a systematic and quantitative comparison of such models remains to be explored. We propose in this contribution such a benchmark of road network growth models.
+
+}
+
+
+
+\sframe{Road network generation multi-model}{
+
+
+% Whereas each model includes plausible mechanisms and often yields reasonable empirical results, a systematic and quantitative comparison of such models remains to be explored. We propose in this contribution such a benchmark of road network growth models. We include in the comparison (i) a random null model; (ii) a random potential breakdown model (Raimbault, 2020); (iii) a deterministic potential breakdown model (Raimbault, 2019); (iv) a cost-benefit compromise model (Louf et al., 2013); (v) a biological network generation model (Raimbault, 2018); and (vi) a self- reinforcement model (Molinero and Hernando, 2020).
 
 At each time step, with a fixed population density: 
 
@@ -61,7 +75,7 @@ At each time step, with a fixed population density:
 
 \sframe{Biological network generation}{
 
-Model studied by~\cite{tero2010rules} : exploration and reinforcement by a slime mould searching for ressources
+Model introduced by~\cite{tero2010rules}: exploration and reinforcement by a slime mould searching for ressources
 
 \bigskip
 
@@ -75,7 +89,7 @@ Model studied by~\cite{tero2010rules} : exploration and reinforcement by a slime
 \medskip
 
 \footnotesize
-\textit{Application to the design of optimal bus routes}
+\textit{Application to the design of optimal bus routes in \cite{raimbault2018systemes}}
 
 }
 
@@ -141,6 +155,8 @@ Cost-benefits & $\lambda$ & compromise & compromise & $[0;0.1]$ & $0.05$ \\\hlin
 
 \sframe{Model setup}{
 
+% We use the GHSL dataset for functional urban areas worldwide and OpenStreetMap to extract real networks and population distributions for the 1000 largest urban areas,
+
 \textbf{Synthetic setup: } rank-sized monocentric cities, simple connection with bord nodes to avoid bord effects 
 
 \textbf{Real setup: } Population density raster at 500m resolution (European Union, from Eurostat)
@@ -158,14 +174,21 @@ Cost-benefits & $\lambda$ & compromise & compromise & $[0;0.1]$ & $0.05$ \\\hlin
 
 \sframe{Network Indicators}{
 
+% and to compute corresponding values of diverse network measures (including betweenness and closeness centralities, accessibility, performance, diameter, density, average link length, average clustering coefficient).
+
 Network Topology measured by:
 
 \begin{itemize}
-	\item Betweenness and Closeness centralities: average and hierarchy
-	\item Accessibility (weighted closeness)
+	\item Average betweenness and closeness centralities
 	\item Efficiency (network pace relative to euclidian distance)
 	\item Mean path length, diameter
 \end{itemize}
+
+}
+
+\sframe{}{
+
+% The models are integrated into the spatialdata scala library (Raimbault et al., 2020) and into the OpenMOLE software for model exploration and validation (Reuillon et al., 2013).
 
 }
 
@@ -180,7 +203,7 @@ Network Topology measured by:
 
 \centering
 
-\includegraphics[width=\textwidth]{figures/7-1-2-fig-networkgrowth-examples.jpg}
+\includegraphics[width=0.9\textwidth]{figures/7-1-2-fig-networkgrowth-examples.jpg}
 
 \footnotesize\textit{In order: connection; random; deterministic breakdown; random breakdown; cost-driven; biological.}
 
@@ -189,15 +212,42 @@ Network Topology measured by:
 
 \sframe{Pattern Space Exploration algorithm}{
 
+% We then run a diversity search algorithm, the Pattern Space Exploration algorithm (Cherel et al., 2015), for each model with their own free parameters and with the population distribution also as input parameter among the sampled areas. This algorithm is specifically tailored to provide feasible spaces of model outputs in relatively low dimensions.
+
+\includegraphics[width=\linewidth]{figures/pone_0138212_g002.png}
+
+
+
 }
 
 
 \sframe{Indicators feasible space}{
 
+% We thus proceed to a principal component analysis on real data points and project simulated values on the two first components, taken as objectives of the diversity algorithm. We obtain different shapes of feasible point clouds and corresponding effective degrees of freedom, some regions in the objective space reachable by a single model only, and a small number of urban areas which can not be approximated by the models.
+
+\centering
+
+\includegraphics[width=\linewidth]{figures/scatter_pse_allmodels.png}
+
+
 }
 
 
 \sframe{Hypervolumes}{
+
+\begin{center}
+\includegraphics[width=0.7\linewidth]{figures/pointclouds-overlap.png}
+\end{center}
+
+
+
+}
+
+\section{Discussion}
+
+\sframe{Discussion}{
+
+% This quantitatively confirms the complementarity of diverse processes driving road network growth, and the need for a plurality of models to explain it.
 
 }
 
