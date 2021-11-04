@@ -283,8 +283,8 @@ end
 
 to network-biological:to-real-network
   ask biological-network-links [
-    let e1 nobody let le1 end1 ifelse [count cities-here] of le1 > 0 [set e1 [one-of cities-here] of le1][ask [patch-here] of le1 [sprout-cities 1 [set e1 self]]]
-    let e2 nobody let le2 end2 ifelse [count cities-here] of le2 > 0 [set e2 [one-of cities-here] of le2][ask [patch-here] of le2 [sprout-cities 1 [set e2 self]]]
+    let e1 nobody let le1 end1 ifelse [count cities-here] of le1 > 0 [set e1 [one-of cities-here] of le1][ask [patch-here] of le1 [sprout-cities 1 [set e1 self set center? false]]]
+    let e2 nobody let le2 end2 ifelse [count cities-here] of le2 > 0 [set e2 [one-of cities-here] of le2][ask [patch-here] of le2 [sprout-cities 1 [set e2 self set center? false]]]
     ask e1 [create-road-with e2 [network:new-road]]
   ]
 end

@@ -1,0 +1,4 @@
+27/10/2021 8:38:40 ; 2:00:54 ; failed (heap space ; no results: hook freq) ; 131 model
+env 10h
+[! pb very long run + large memory: fixed with max time steps and cities only]
+
