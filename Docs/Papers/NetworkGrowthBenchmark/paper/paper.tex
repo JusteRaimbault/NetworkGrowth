@@ -1,27 +1,66 @@
+\documentclass[urbansci,article,submit,pdftex,oneauthor]{Definitions/mdpi} 
 
-\documentclass{article}
+%=================================================================
+% MDPI internal commands - do not modify
+\firstpage{1} 
+\makeatletter 
+\setcounter{page}{\@firstpage} 
+\makeatother
+\pubvolume{1}
+\issuenum{1}
+\articlenumber{0}
+\pubyear{2025}
+\copyrightyear{2025}
+%\externaleditor{Firstname Lastname} % More than 1 editor, please add `` and '' before the last editor name
+\datereceived{ } 
+\daterevised{ } % Comment out if no revised date
+\dateaccepted{ } 
+\datepublished{ } 
+%\datecorrected{} % For corrected papers: "Corrected: XXX" date in the original paper.
+%\dateretracted{} % For retracted papers: "Retracted: XXX" date in the original paper.
+\hreflink{https://doi.org/} % If needed use \linebreak
+%\doinum{}
+%\pdfoutput=1 % Uncommented for upload to arXiv.org
+%\CorrStatement{yes}  % For updates
+%\longauthorlist{yes} % For many authors that exceed the left citation part
+%\IsAssociation{yes} % For association journals
 
-\usepackage{graphicx,hyperref}
-
-% title ECTQG: benchmarking road network growth models
-\title{Complementarity of generative models for road networks}
-\author{J. Raimbault$^{1,2,3,\ast}$\\
-$^{1}$ Center for Advanced Spatial Analysis, University College London\\
-$^{2}$ UPS CNRS 3611 ISC-PIF\\
-$^{3}$ UMR CNRS 8504 G{\'e}ographie-cit{\'e}s\medskip\\
-$\ast$ \texttt{juste.raimbault@polytechnique.edu}
-}
-\date{}
+%=================================================================
 
 
+\Title{Complementarity of generative models for road networks}
+\TitleCitation{Complementarity of generative models for road networks}
+
+\newcommand{\orcidauthorA}{0000-0000-0000-000X}
+\Author{Firstname Lastname $^{1}$\orcidA{}, Firstname Lastname $^{2}$ and Firstname Lastname $^{2,}$*}
+\AuthorNames{Firstname Lastname, Firstname Lastname and Firstname Lastname}
+\AuthorCitation{Raimbault, J.}
+
+\address{%
+$^{1}$ \quad Affiliation 1; e-mail@e-mail.com\\
+$^{2}$ \quad Affiliation 2; e-mail@e-mail.com}
+% $^{1}$ Center for Advanced Spatial Analysis, University College London\\
+%$^{2}$ UPS CNRS 3611 ISC-PIF\\
+%$^{3}$ UMR CNRS 8504 G{\'e}ographie-cit{\'e}s
+
+\corres{Correspondence: j.raimbault@ucl.ac.uk} % work done while at CASA
+
+
+\abstract{Understanding the dynamics of road networks has theoretical implications for urban science and practical applications for sustainable long-term planning. Various generative models to explain road network growth have been introduced in the literature. We propose in this paper a systematic benchmark of such models integrating different paradigms (spatial interactions, cost-benefit compromises, biological network growth), focusing on the feasible space of generated network measures. We find a quantitatively high complementarity between the different models. This confirms the necessity of a plurality of urban models, in line with integrative approaches to urban systems.}
+
+\keyword{keyword 1; keyword 2; keyword 3} 
+
+
+
+
+
+% https://www.mdpi.com/journal/urbansci/instructions
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
-\maketitle
 
-
-\begin{abstract}
-	Understanding the dynamics of road networks has theoretical implications for urban science and practical applications for sustainable long-term planning. Various generative models to explain road network growth have been introduced in the literature. We propose in this paper a systematic benchmark of such models integrating different paradigms (spatial interactions, cost-benefit compromises, biological network growth), focusing on the feasible space of generated network measures. We find a quantitatively high complementarity between the different models. This confirms the necessity of a plurality of urban models, in line with integrative approaches to urban systems.
-\end{abstract}
 
 
 
@@ -162,15 +201,39 @@ Finally, this work would gain to include more generative models for road network
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{6pt} 
 
-\bibliographystyle{apalike}
+
+%\supplementary{The following supporting information can be downloaded at:  \linksupplementary{s1}, Figure S1: title; Table S1: title; Video S1: title.}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\authorcontributions{For research articles with several authors, a short paragraph specifying their individual contributions must be provided.}
+
+\funding{This research received no external funding.}
+
+
+%\dataavailability{} 
+% We encourage all authors of articles published in MDPI journals to share their research data. In this section, please provide details regarding where data supporting reported results can be found, including links to publicly archived datasets analyzed or generated during the study. Where no new data were created, or where data is unavailable due to privacy or ethical restrictions, a statement is still required. Suggested Data Availability Statements are available in section ``MDPI Research Data Policies'' at \url{https://www.mdpi.com/ethics}.
+
+
+
+
+%\acknowledgments{}
+
+\conflictsofinterest{The authors declare no conflicts of interest.} 
+
+
+
+
+\reftitle{References}
+
 \bibliography{biblio}
 
 
-
-
-
-
+\PublishersNote{}
 
 \end{document}
 

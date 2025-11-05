@@ -1,0 +1,57 @@
+% Updated 26 September 2025 used in Y2025
+%% --------------------------------------------------------------------
+%\DeclareOption{}{%
+%	\gdef\@journal{}
+%	\gdef\@journalfull{}
+%	\gdef\@journalshort{}
+%	\gdef\@doiabbr{}
+%	\gdef\@ISSN{}
+%	\gdef\@societyowner{}
+%}
+%% --------------------------------------------------------------------
+%% Fields meanings:
+%% - Option name: Journal website name (used in URL)
+%% - @journal: Journal website name (used in URL)
+%% - @journalfull: Journal full name
+%% - @journalshort: Short Name (ISO4)
+%% - @doiabbr: DOI abbreviation of the journal used in DOI numbers 10.3390/journalnameXXXX
+%% - @ISSN: Journal E-ISSN number
+%% - @societyowner: Name of society owning the journal (for society journals)
+%% --------------------------------------------------------------------
+
+\DeclareOption{modelling}{%
+	\gdef\@journal{modelling}
+	\gdef\@journalfull{Modelling}
+	\gdef\@journalshort{Modelling}
+	\gdef\@doiabbr{modelling}
+	\gdef\@ISSN{2673-3951}	
+	\gdef\@societyowner{}
+}
+
+
+\DeclareOption{smartcities}{%
+	\gdef\@journal{smartcities}
+	\gdef\@journalfull{Smart Cities}
+	\gdef\@journalshort{Smart Cities}
+	\gdef\@doiabbr{smartcities}
+	\gdef\@ISSN{2624-6511}	
+	\gdef\@societyowner{}
+}
+
+\DeclareOption{transportation}{%
+	\gdef\@journal{transportation}
+	\gdef\@journalfull{Transportation}
+	\gdef\@journalshort{Transportation}
+	\gdef\@doiabbr{transportation}
+	\gdef\@ISSN{}	
+	\gdef\@societyowner{}
+}
+
+\DeclareOption{urbansci}{%
+	\gdef\@journal{urbansci}
+	\gdef\@journalfull{Urban Science}
+	\gdef\@journalshort{Urban Sci.}
+	\gdef\@doiabbr{urbansci}
+	\gdef\@ISSN{2413-8851}
+	\gdef\@societyowner{}
+}
